@@ -3,11 +3,21 @@
 // Component Import:
 import TheHeader from "@/components/TheHeader.vue";
 import ProductCard from "@/components/ProductCard.vue";
-import products from "@/data/products.json";
 
-// Pinia:
-import {useProductStore} from '@/stores/ProductStore'
-useProductStore()
+
+// Store import:
+import { useProductStore } from '@/stores/ProductStore';
+import { useCartStore } from "@/stores/CartStore";
+
+// Store declaration:
+const productStore = useProductStore();
+const cartStore = useCartStore();
+
+
+// We use the methods of Pinia's Product Store to fill the product in the page:
+productStore.fill();
+
+
 
 </script>
 
@@ -16,9 +26,10 @@ useProductStore()
     <TheHeader />
     <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
       <ProductCard
-        v-for="product in products"
+        v-for="product in productStore.products"
         :key="product.name"
         :product="product"
+        @addToCart = "cartStore.addItemToCart($event, product)"
       />
     </ul>
   </div>

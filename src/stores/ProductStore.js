@@ -7,12 +7,22 @@ export const useProductStore = defineStore("ProductStore", {
   state: () => {
 
     return {
-      products
+      products: []
+    }
+
+  },
+
+  // used like methods
+  actions: {
+
+    async fill(){
+
+      // I prodotti dichiarati nello state diventano i prodotti importati dal json:
+      this.products = (await import("@/data/products.json")).default; 
+
     }
 
   }
-
-  // action
 
   // getter
 
